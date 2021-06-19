@@ -4,14 +4,36 @@ const userInput = document.getElementById('input');
 const userResult = document.getElementById('result');
 
 const operators = document.getElementsByClassName('operator');
+const numbers = document.getElementsByClassName('number');
+
+console.log('operators: ' + operators);
+console.log('numbers: ' + numbers);
 
 var result = 0;
 var value;
 var started = false;
 var operator;
-var operatorsSymbols = ['/', '*', '-', '+'];
+var operatorsSymbols = ['/', '*', '-', '+', '='];
 
-console.log('operators: ' + operators);
+// NUMBERS 0 1 2 3 4 5 6 7 8 9 ,
+
+for (let i = 0; i < numbers.length; i++) {
+
+    numbers[i].addEventListener('click', function () {
+
+        if (userInput.value == "" && result == 0) {
+            value = numbers[i].value;
+        } else {
+            value += numbers[i].value;
+        }
+        console.log('Number clic. Value: ' + value);
+        userInput.value = value;
+
+    }, false);
+
+}
+
+// OPERATORS + - * / =
 
 for (let i = 0; i < operators.length; i++) {
 
@@ -26,6 +48,8 @@ for (let i = 0; i < operators.length; i++) {
             // CLIC OPERATOR 1ST TIME -> INPUT GOES TO RESULT, SAVE OPERATOR, CHANGE SWITCH
             result = value;
             started = true;
+            userInput.value = '';
+            userResult.innerHTML = "Total: " + result;
         } else {
             // CLICS OPERATOR 2NDO AND BEYOND TIME -> OPERATE, SAVE OPERATOR
             switch (operator) {
@@ -42,16 +66,18 @@ for (let i = 0; i < operators.length; i++) {
                     result /= value;
                     break;
             }
+            userResult.innerHTML = "Total: " + result;
         }
 
         operator = operators[i].value;
-        userInput.value = '';
+        value = "";
 
-        console.log('result: ' + result);
-        console.log('operator: ' + operator);
+        console.log('Operator: ' + operator);
+
+        if (operator == '=') {
+            userInput.value = result;
+        }
 
     }, false);
 
 }
-
-// USER CLICS = --> DEPENDING ON OPERATOR, THE APP DO THE OPERATION WITH RESULT AND INPUT; THEN, RETURN RESULT
