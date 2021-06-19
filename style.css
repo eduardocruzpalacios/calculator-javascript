@@ -3,3 +3,80 @@
     margin: 0;
     padding: 0;
 }
+
+body {
+    background-color: #eee;
+    color: #111;
+    min-height: 100vh;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+/* CALCULATOR */
+
+#calculator {
+    margin: 0 auto;
+    background-color: #666;
+    border-radius: 14px;
+    border: 2px solid #111;
+    padding: 1rem;
+    width: 600px;
+    font-size: 1.5rem;
+}
+
+input {
+    width: 100%;
+    border-radius: 14px;
+    border: 2px solid #111;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    outline: none;
+    font-size: 2rem;
+    background-color: #fff;
+    color: #111;
+}
+
+#panel {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 2rem;
+}
+
+button {
+    border-radius: 14px;
+    border: 2px solid #111;
+    font-size: 2rem;
+}
+
+button:hover {
+    background-color: #00f;
+    color: #eee;
+    transition: all linear .25s;
+    cursor: pointer;
+}
+
+/* RESULT BOX */
+#resultContainer {
+    width: 300px;
+    height: 100px;
+    background-color: #fff;
+    border-radius: 14px;
+    border: 2px solid #111;
+
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#result {
+    color: #f00;
+    font-size: 1.5rem;
+}
