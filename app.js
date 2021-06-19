@@ -12,6 +12,7 @@ console.log('numbers: ' + numbers);
 var result = 0;
 var value;
 var started = false;
+var finished = false;
 var operator;
 var operatorsSymbols = ['/', '*', '-', '+', '='];
 
@@ -21,13 +22,22 @@ for (let i = 0; i < numbers.length; i++) {
 
     numbers[i].addEventListener('click', function () {
 
-        if (userInput.value == "" && result == 0) {
+        if (finished) {
             value = numbers[i].value;
+            console.log('finished. Value: ' + value);
+            userResult.innerHTML = "Total: " + result;
+            started = false;
+        } else if (userInput.value == "" && result == 0) {
+            // FIRST VALUE ENTERED
+            value = numbers[i].value;
+            console.log('FIRST VALUE ENTERED');
         } else {
+            // 2ND VALUE AND BEYOND ENTERED
             value += numbers[i].value;
         }
         console.log('Number clic. Value: ' + value);
         userInput.value = value;
+        finished = false;
 
     }, false);
 
@@ -76,6 +86,10 @@ for (let i = 0; i < operators.length; i++) {
 
         if (operator == '=') {
             userInput.value = result;
+            userResult.innerHTML = "Total: " + result;
+            result = 0;
+            finished = true;
+            console.log('= clicked');
         }
 
     }, false);
