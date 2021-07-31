@@ -1,97 +1,92 @@
-// VARIABLES
+const inputEl = document.getElementById('input');
+const totalEl = document.getElementById('total');
 
-const userInput = document.getElementById('input');
-const userResult = document.getElementById('result');
+const operatorsEls = document.getElementsByClassName('operator');
+const numbersEls = document.getElementsByClassName('number');
 
-const operators = document.getElementsByClassName('operator');
-const numbers = document.getElementsByClassName('number');
+let inputValue = '';
+let countBeforeOperating = 0;
+let total = 0;
+let started = false;
+let finished = false;
+let operator;
+let operatorsSymbols = ['/', '*', '-', '+', '='];
 
-console.log('operators: ' + operators);
-console.log('numbers: ' + numbers);
+PrintTotal();
 
-var result = 0;
-var value;
-var started = false;
-var finished = false;
-var operator;
-var operatorsSymbols = ['/', '*', '-', '+', '='];
-
-// NUMBERS 0 1 2 3 4 5 6 7 8 9 ,
-
-for (let i = 0; i < numbers.length; i++) {
-
-    numbers[i].addEventListener('click', function () {
-
+// get user number input
+for (let i = 0; i < numbersEls.length; i++) {
+    numbersEls[i].addEventListener('click', function () {
         if (finished) {
-            value = numbers[i].value;
-            console.log('finished. Value: ' + value);
-            userResult.innerHTML = "Total: " + result;
-            started = false;
-        } else if (userInput.value == "" && result == 0) {
-            // FIRST VALUE ENTERED
-            value = numbers[i].value;
-            console.log('FIRST VALUE ENTERED');
-        } else {
-            // 2ND VALUE AND BEYOND ENTERED
-            value += numbers[i].value;
+            Initiate();
+            finished = false;
         }
-        console.log('Number clic. Value: ' + value);
-        userInput.value = value;
-        finished = false;
-
+        if (inputEl.inputValue === '' && total === 0) {
+            inputValue = numbersEls[i].value;
+        } else {
+            inputValue += numbersEls[i].value;
+        }
+        inputEl.value = inputValue;
+        countBeforeOperating = Number(inputValue);
     }, false);
-
 }
 
-// OPERATORS + - * / =
-
-for (let i = 0; i < operators.length; i++) {
-
-    operators[i].addEventListener('click', function () {
-
-        value = Number(userInput.value);
-
-        if (value == "") {
-            // CLIC AND INPUT NOT FOUND
-            alert('Write some number before calculating');
+// operate
+for (let i = 0; i < operatorsEls.length; i++) {
+    operatorsEls[i].addEventListener('click', function () {
+        if (countBeforeOperating === 0 && !finished) {
+            // OPERATOR CLICKED BEFORE ANY NUMBER
+            alert('Click a number before calculating');
+            return;
         } else if (!started) {
-            // CLIC OPERATOR 1ST TIME -> INPUT GOES TO RESULT, SAVE OPERATOR, CHANGE SWITCH
-            result = value;
+            // CLIC OPERATOR 1ST TIME
+            total = countBeforeOperating;
             started = true;
-            userInput.value = '';
-            userResult.innerHTML = "Total: " + result;
         } else {
-            // CLICS OPERATOR 2NDO AND BEYOND TIME -> OPERATE, SAVE OPERATOR
+            // CLICKS OPERATOR 2NDO AND BEYOND TIME
             switch (operator) {
                 case '+':
-                    result += value;
+                    total += countBeforeOperating;
                     break;
                 case '-':
-                    result -= value;
+                    total -= countBeforeOperating;
                     break;
                 case '*':
-                    result *= value;
+                    total *= countBeforeOperating;
                     break;
                 case '/':
-                    result /= value;
+                    total /= countBeforeOperating;
                     break;
             }
-            userResult.innerHTML = "Total: " + result;
         }
 
-        operator = operators[i].value;
-        value = "";
+        countBeforeOperating = 0;
+        PrintTotal();
+        inputEl.value = '';
+        operator = operatorsEls[i].value;
+        inputValue = '';
 
-        console.log('Operator: ' + operator);
-
-        if (operator == '=') {
-            userInput.value = result;
-            userResult.innerHTML = "Total: " + result;
-            result = 0;
+        if (operator === '=') {
+            inputEl.value = total;
             finished = true;
-            console.log('= clicked');
+        } else {
+            finished = false;
         }
 
     }, false);
+}
 
+function Initiate() {
+    value = '';
+    inputEl.innerHTML = '';
+
+    total = 0;
+    PrintTotal();
+
+    operator = '';
+    started = false;
+}
+
+function PrintTotal() {
+    totalEl.innerHTML = 'Total: ' + total;
 }
