@@ -9,8 +9,8 @@ let countBeforeOperating = 0;
 let total = 0;
 let started = false;
 let finished = false;
-let operator;
-let operatorsSymbols = ['/', '*', '-', '+', '='];
+let operator ='';
+const operatorsSymbols = ['/', '*', '-', '+', '='];
 
 PrintTotal();
 
