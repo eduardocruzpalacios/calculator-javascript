@@ -31,6 +31,15 @@ for (let i = 0; i < numbersEls.length; i++) {
     }, false);
 }
 
+inputEl.addEventListener('input', function() {
+    if (finished) {
+        Initiate();
+        finished = false;
+    }
+    inputValue = inputEl.value;
+    countBeforeOperating = Number(inputValue);
+}, false);
+
 // operate
 for (let i = 0; i < operatorsEls.length; i++) {
     operatorsEls[i].addEventListener('click', function () {
