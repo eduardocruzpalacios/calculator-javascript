@@ -9,93 +9,104 @@ let countBeforeOperating = 0;
 let total = 0;
 let started = false;
 let finished = false;
-let operator ='';
+let operator = '';
 const operatorsSymbols = ['/', '*', '-', '+', '='];
 
 PrintTotal();
 
 // get user number input
 for (let i = 0; i < numbersEls.length; i++) {
-    numbersEls[i].addEventListener('click', function () {
-        if (finished) {
-            Initiate();
-            finished = false;
-        }
-        if (inputEl.inputValue === '' && total === 0) {
-            inputValue = numbersEls[i].value;
-        } else {
-            inputValue += numbersEls[i].value;
-        }
-        inputEl.value = inputValue;
-        countBeforeOperating = Number(inputValue);
-    }, false);
-}
-
-inputEl.addEventListener('input', function() {
-    if (finished) {
+  numbersEls[i].addEventListener(
+    'click',
+    function () {
+      if (finished) {
         Initiate();
         finished = false;
+      }
+      if (inputEl.inputValue === '' && total === 0) {
+        inputValue = numbersEls[i].value;
+      } else {
+        inputValue += numbersEls[i].value;
+      }
+      inputEl.value = inputValue;
+      countBeforeOperating = Number(inputValue);
+    },
+    false
+  );
+}
+
+inputEl.addEventListener(
+  'input',
+  function () {
+    if (finished) {
+      Initiate();
+      finished = false;
     }
     inputValue = inputEl.value;
     countBeforeOperating = Number(inputValue);
-}, false);
+  },
+  false
+);
 
 // operate
 for (let i = 0; i < operatorsEls.length; i++) {
-    operatorsEls[i].addEventListener('click', function () {
-        if (countBeforeOperating === 0 && !finished) {
-            // OPERATOR CLICKED BEFORE ANY NUMBER
-            alert('Click a number before calculating');
-            return;
-        } else if (!started) {
-            // CLIC OPERATOR 1ST TIME
-            total = countBeforeOperating;
-            started = true;
-        } else {
-            // CLICKS OPERATOR 2NDO AND BEYOND TIME
-            switch (operator) {
-                case '+':
-                    total += countBeforeOperating;
-                    break;
-                case '-':
-                    total -= countBeforeOperating;
-                    break;
-                case '*':
-                    total *= countBeforeOperating;
-                    break;
-                case '/':
-                    total /= countBeforeOperating;
-                    break;
-            }
+  operatorsEls[i].addEventListener(
+    'click',
+    function () {
+      if (countBeforeOperating === 0 && !finished) {
+        // OPERATOR CLICKED BEFORE ANY NUMBER
+        alert('Click a number before calculating');
+        return;
+      } else if (!started) {
+        // CLIC OPERATOR 1ST TIME
+        total = countBeforeOperating;
+        started = true;
+      } else {
+        // CLICKS OPERATOR 2NDO AND BEYOND TIME
+        switch (operator) {
+          case '+':
+            total += countBeforeOperating;
+            break;
+          case '-':
+            total -= countBeforeOperating;
+            break;
+          case '*':
+            total *= countBeforeOperating;
+            break;
+          case '/':
+            total /= countBeforeOperating;
+            break;
         }
+      }
 
-        countBeforeOperating = 0;
-        PrintTotal();
-        inputEl.value = '';
-        operator = operatorsEls[i].value;
-        inputValue = '';
+      countBeforeOperating = 0;
+      PrintTotal();
+      inputEl.value = '';
+      operator = operatorsEls[i].value;
+      inputValue = '';
 
-        if (operator === '=') {
-            inputEl.value = total;
-            finished = true;
-        } else {
-            finished = false;
-        }
-
-    }, false);
+      if (operator === '=') {
+        inputEl.value = total;
+        finished = true;
+      } else {
+        finished = false;
+      }
+    },
+    false
+  );
 }
 
 function Initiate() {
-    value = '';
-    inputEl.innerHTML = '';
+  value = '';
+  inputEl.innerHTML = '';
 
-    total = 0;
-    PrintTotal();
+  total = 0;
+  PrintTotal();
 
-    operator = '';
-    started = false;
+  operator = '';
+  started = false;
 }
 
 function PrintTotal() {
-    totalEl.innerHTML = 'Total: ' + total;
+  totalEl.innerHTML = 'Total: ' + total;
 }
