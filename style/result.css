@@ -1,0 +1,32 @@
+#totalContainer {
+  align-items: center;
+  background-color: #fff;
+  border: 2px solid #111;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  padding: .25rem;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+#total {
+  color: #f00;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 650px) {
+  #totalContainer {
+    left: 50%;
+    margin-top: 1rem;
+    right: auto;
+    transform: translateX(-50%);
+    top: auto;
+    width: 75%;
+  }
+
+  #total {
+    font-size: 1rem;
+  }
+}
