@@ -35,16 +35,6 @@ const assignFunctionalityToNumberButtons = () => {
   }
 };
 
-const assignFunctionalityToInput = () => {
-  inputEl.addEventListener(
-    'input',
-    () => {
-      calculator.assignOperand(inputEl.value);
-    },
-    false
-  );
-};
-
 const assignFunctionalityToOperatorButtons = () => {
   for (let i = 0; i < operatorsEls.length; i++) {
     operatorsEls[i].addEventListener(
@@ -72,6 +62,5 @@ const assignFunctionalityToComputeButton = () => {
 
 printComputationOnResultBox();
 assignFunctionalityToNumberButtons();
-assignFunctionalityToInput();
 assignFunctionalityToOperatorButtons();
 assignFunctionalityToComputeButton();
