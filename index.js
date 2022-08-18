@@ -1,112 +1,83 @@
+import { Calculator } from './calculator/calculator.js';
+
+let calculator = new Calculator();
+
 const inputEl = document.getElementById('input');
 const totalEl = document.getElementById('total');
 
 const operatorsEls = document.getElementsByClassName('operator');
 const numbersEls = document.getElementsByClassName('number');
 
-let inputValue = '';
-let countBeforeOperating = 0;
-let total = 0;
-let started = false;
-let finished = false;
-let operator = '';
-const operatorsSymbols = ['/', '*', '-', '+', '='];
+const computeEl = document.getElementById('=');
 
-PrintTotal();
+const printComputation = () => {
+  totalEl.innerHTML = 'Total: ' + calculator.getComputation();
+  console.log(calculator);
+};
 
-// get user number input
-for (let i = 0; i < numbersEls.length; i++) {
-  numbersEls[i].addEventListener(
-    'click',
-    function () {
-      if (finished) {
-        Initiate();
-        finished = false;
-      }
-      if (inputEl.inputValue === '' && total === 0) {
-        inputValue = numbersEls[i].value;
-      } else {
-        inputValue += numbersEls[i].value;
-      }
-      inputEl.value = inputValue;
-      countBeforeOperating = Number(inputValue);
-    },
-    false
-  );
-}
+const cleanResult = () => {
+  totalEl.innerHTML = 'Total: ' + calculator.getCurrentOperand();
+  console.log(calculator);
+};
 
-inputEl.addEventListener(
-  'input',
-  function () {
-    if (finished) {
-      Initiate();
-      finished = false;
-    }
-    inputValue = inputEl.value;
-    countBeforeOperating = Number(inputValue);
-  },
-  false
-);
-
-// operate
-for (let i = 0; i < operatorsEls.length; i++) {
-  operatorsEls[i].addEventListener(
-    'click',
-    function () {
-      if (countBeforeOperating === 0 && !finished) {
-        // OPERATOR CLICKED BEFORE ANY NUMBER
-        alert('Click a number before calculating');
-        return;
-      } else if (!started) {
-        // CLIC OPERATOR 1ST TIME
-        total = countBeforeOperating;
-        started = true;
-      } else {
-        // CLICKS OPERATOR 2NDO AND BEYOND TIME
-        switch (operator) {
-          case '+':
-            total += countBeforeOperating;
-            break;
-          case '-':
-            total -= countBeforeOperating;
-            break;
-          case '*':
-            total *= countBeforeOperating;
-            break;
-          case '/':
-            total /= countBeforeOperating;
-            break;
+const assignFunctionalityToNumberButtons = () => {
+  for (let i = 0; i < numbersEls.length; i++) {
+    numbersEls[i].addEventListener(
+      'click',
+      () => {
+        calculator.assignOperand(numbersEls[i].value);
+        if(calculator.getComputation !== 0) {
+          cleanResult();
         }
-      }
+        console.log(calculator);
+      },
+      false
+    );
+  }
+};
 
-      countBeforeOperating = 0;
-      PrintTotal();
-      inputEl.value = '';
-      operator = operatorsEls[i].value;
-      inputValue = '';
-
-      if (operator === '=') {
-        inputEl.value = total;
-        finished = true;
-      } else {
-        finished = false;
+const assignFunctionalityToInput = () => {
+  inputEl.addEventListener(
+    'input',
+    () => {
+      calculator.assignOperand(inputEl.value);
+      if (calculator.getComputation !== 0) {
+        cleanResult();
       }
+      console.log(calculator);
     },
     false
   );
-}
+};
 
-function Initiate() {
-  value = '';
-  inputEl.innerHTML = '';
+const assignFunctionalityToOperatorButtons = () => {
+  for (let i = 0; i < operatorsEls.length; i++) {
+    operatorsEls[i].addEventListener(
+      'click',
+      () => {
+        calculator.setOperator(operatorsEls[i].value);
+        printComputation();
+        console.log(calculator);
+      },
+      false
+    );
+  }
+};
 
-  total = 0;
-  PrintTotal();
+const assignFunctionalityToComputeButton = () => {
+  computeEl.addEventListener(
+    'click',
+    () => {
+      calculator.compute();
+      printComputation();
+      console.log(calculator);
+    },
+    false
+  );
+};
 
-  operator = '';
-  started = false;
-}
-
-function PrintTotal() {
-  totalEl.innerHTML = 'Total: ' + total;
-}
+printComputation();
+assignFunctionalityToNumberButtons();
+assignFunctionalityToInput();
+assignFunctionalityToOperatorButtons();
+assignFunctionalityToComputeButton();
