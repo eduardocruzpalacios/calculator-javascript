@@ -10,12 +10,12 @@ const numbersEls = document.getElementsByClassName('number');
 
 const computeEl = document.getElementById('=');
 
-const printComputation = () => {
-  totalEl.innerHTML = 'Total: ' + calculator.getComputation();
+const printOperand = () => {
+  inputEl.value = calculator.getCurrentOperand();
 };
 
-const cleanResult = () => {
-  totalEl.innerHTML = 'Total: ' + calculator.getCurrentOperand();
+const printComputation = () => {
+  totalEl.innerHTML = 'Total: ' + calculator.getComputation();
 };
 
 const assignFunctionalityToNumberButtons = () => {
@@ -24,9 +24,7 @@ const assignFunctionalityToNumberButtons = () => {
       'click',
       () => {
         calculator.assignOperand(numbersEls[i].value);
-        if(calculator.getComputation !== 0) {
-          cleanResult();
-        }
+        printOperand();
       },
       false
     );
@@ -38,9 +36,6 @@ const assignFunctionalityToInput = () => {
     'input',
     () => {
       calculator.assignOperand(inputEl.value);
-      if (calculator.getComputation !== 0) {
-        cleanResult();
-      }
     },
     false
   );
@@ -52,7 +47,7 @@ const assignFunctionalityToOperatorButtons = () => {
       'click',
       () => {
         calculator.setOperator(operatorsEls[i].value);
-        printComputation();
+        printResult();
       },
       false
     );
@@ -64,6 +59,7 @@ const assignFunctionalityToComputeButton = () => {
     'click',
     () => {
       calculator.compute();
+      printOperand();
       printComputation();
     },
     false
