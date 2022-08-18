@@ -20,8 +20,12 @@ export class Calculator {
     if (this.operand === '' && this.computation === 0) {
       return;
     }
+    if (this.operator !== null) {
+      this.compute();
+    } else {
+      this.operand = '';
+    }
     this.operator = operator;
-    this.operand = '';
   }
 
   getCurrentOperand() {
