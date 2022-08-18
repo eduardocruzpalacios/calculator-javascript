@@ -6,6 +6,9 @@ export class Calculator {
   }
 
   assignOperand(operand) {
+    if (this.operand.slice(-1) === '.' && operand === '.') {
+      return;
+    }
     if (this.computation === 0 || operand === '') {
       this.operand = operand;
     } else {
