@@ -1,6 +1,6 @@
-import { Calculator } from './calculator/calculator.js';
+import { CalculatorLogic } from './calculatorLogic/calculatorLogic.js';
 
-let calculator = new Calculator();
+let calculatorLogic = new CalculatorLogic();
 
 const inputEl = document.getElementById('input');
 
@@ -10,11 +10,11 @@ const numbersEls = document.getElementsByClassName('number');
 const computeEl = document.getElementById('=');
 
 const printOperand = () => {
-  inputEl.value = calculator.getCurrentOperand();
+  inputEl.value = calculatorLogic.getCurrentOperand();
 };
 
 const printComputation = () => {
-  inputEl.value = calculator.getComputation();
+  inputEl.value = calculatorLogic.getComputation();
 };
 
 const assignFunctionalityToNumberButtons = () => {
@@ -22,7 +22,7 @@ const assignFunctionalityToNumberButtons = () => {
     numbersEls[i].addEventListener(
       'click',
       () => {
-        calculator.assignOperand(numbersEls[i].value);
+        calculatorLogic.assignOperand(numbersEls[i].value);
         printOperand();
       },
       false
@@ -35,7 +35,7 @@ const assignFunctionalityToOperatorButtons = () => {
     operatorsEls[i].addEventListener(
       'click',
       () => {
-        calculator.setOperator(operatorsEls[i].value);
+        calculatorLogic.setOperator(operatorsEls[i].value);
         printComputation();
       },
       false
@@ -47,7 +47,7 @@ const assignFunctionalityToComputeButton = () => {
   computeEl.addEventListener(
     'click',
     () => {
-      calculator.compute();
+      calculatorLogic.compute();
       printComputation();
     },
     false

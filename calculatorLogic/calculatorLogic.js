@@ -1,4 +1,4 @@
-export class Calculator {
+export class CalculatorLogic {
   constructor() {
     this.operand = '';
     this.operator = null;
