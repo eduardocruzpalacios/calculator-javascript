@@ -1,59 +1,37 @@
-import { CalculatorLogic } from './calculatorLogic/calculatorLogic.js';
-
-let calculatorLogic = new CalculatorLogic();
+import { calculatorLogic } from './calculatorLogic/calculatorLogic.js';
 
 const inputEl = document.getElementById('input');
 
-const operatorsEls = document.getElementsByClassName('operator');
-const numbersEls = document.getElementsByClassName('number');
+const operatorsEls = document.querySelectorAll('.operator');
+const numbersEls = document.querySelectorAll('.number');
 
 const computeEl = document.getElementById('=');
 
-const printOperand = () => {
-  inputEl.value = calculatorLogic.getCurrentOperand();
+const printValue = value => {
+  inputEl.value = value;
 };
 
-const printComputation = () => {
-  inputEl.value = calculatorLogic.getComputation();
-};
-
-const assignFunctionalityToNumberButtons = () => {
-  for (let i = 0; i < numbersEls.length; i++) {
-    numbersEls[i].addEventListener(
-      'click',
-      () => {
-        calculatorLogic.assignOperand(numbersEls[i].value);
-        printOperand();
-      },
-      false
-    );
+const assignFunctionalityToButtons = (elements, callback) => {
+  for (let i = 0; i < elements.length; i++) {
+    elements[i].addEventListener('click', callback, false);
   }
 };
 
-const assignFunctionalityToOperatorButtons = () => {
-  for (let i = 0; i < operatorsEls.length; i++) {
-    operatorsEls[i].addEventListener(
-      'click',
-      () => {
-        calculatorLogic.setOperator(operatorsEls[i].value);
-        printComputation();
-      },
-      false
-    );
+assignFunctionalityToButtons(numbersEls, () => {
+  calculatorLogic.assignOperand(event.target.value);
+  printValue(calculatorLogic.getCurrentOperand());
+});
+
+assignFunctionalityToButtons(operatorsEls, () => {
+  calculatorLogic.setOperator(event.target.value);
+  printValue(calculatorLogic.getComputation());
+});
+
+computeEl.addEventListener('click', () => {
+  try {
+    calculatorLogic.compute();
+    printValue(calculatorLogic.getComputation());
+  } catch (error) {
+    printValue(error.message);
   }
-};
-
-const assignFunctionalityToComputeButton = () => {
-  computeEl.addEventListener(
-    'click',
-    () => {
-      calculatorLogic.compute();
-      printComputation();
-    },
-    false
-  );
-};
-
-assignFunctionalityToNumberButtons();
-assignFunctionalityToOperatorButtons();
-assignFunctionalityToComputeButton();
+});
