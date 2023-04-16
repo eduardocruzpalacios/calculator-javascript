@@ -1,4 +1,4 @@
-export class CalculatorLogic {
+class CalculatorLogic {
   constructor() {
     this.operand = '';
     this.operator = null;
@@ -39,18 +39,25 @@ export class CalculatorLogic {
     if (this.operand === '') {
       return;
     }
+    const operand = Number(this.operand);
+    if (Number.isNaN(operand)) {
+      throw new Error('Invalid operand: ' + this.operand);
+    }
     switch (this.operator) {
       case '+':
-        this.computation += Number(this.operand);
+        this.computation += operand;
         break;
       case '-':
-        this.computation -= Number(this.operand);
+        this.computation -= operand;
         break;
       case '*':
-        this.computation *= Number(this.operand);
+        this.computation *= operand;
         break;
       case '/':
-        this.computation /= Number(this.operand);
+        if (operand === 0) {
+          throw new Error('Cannot divide by zero');
+        }
+        this.computation /= operand;
         break;
       default:
         return;
@@ -63,3 +70,5 @@ export class CalculatorLogic {
     return this.computation;
   }
 }
+
+export const calculatorLogic = new CalculatorLogic();
